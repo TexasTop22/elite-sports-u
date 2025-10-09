@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import WeeklyFocus from "../../../components/WeeklyFocus";
+
 
 export default function EliteFitClub() {
   return (
@@ -28,10 +30,10 @@ export default function EliteFitClub() {
       {/* ─── HERO SECTION ─── */}
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
         <Image
-          src="/images/elite-fit-hero.jpg"
+          src="/images/elite-fit-hero.png"
           alt="Elite Fit Club Training"
           fill
-          className="object-cover brightness-[0.6]"
+          className="object-cover brightness-[0.9]"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/80" />
@@ -46,7 +48,7 @@ export default function EliteFitClub() {
             designed for everyday athletes ready to perform like pros.
           </p>
           <Link
-            href="/contact"
+            href="https://app.glofox.com/portal/#/branch/6350b2f1c42ac18c9b0dc8e5/memberships"
             className="inline-block mt-8 bg-red text-white font-bold px-10 py-4 rounded-full hover:bg-white hover:text-red transition shadow-lg shadow-red/50"
           >
             Join the Club
@@ -61,10 +63,15 @@ export default function EliteFitClub() {
             What Is Elite Fit Club?
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed">
+            Welcome to ELITE CLUB FIT, where you will enjoy UNLIMITED access and a 
+            unified experience designed to build strength, enhance conditioning, 
+            and unlock your athletic potential. 
             Elite Fit Club is more than just a workout — it’s a community built
             on discipline, energy, and results. Designed for youth and adults,
             this program blends functional movement, strength training, and
             endurance conditioning for total athletic development.
+          
+          Ready to Train With Us? Check the schedule, book your spot, and discover the CLUB difference. These group fitness classes cater to all levels, offering total-body workouts that deliver results in no time.
           </p>
         </div>
       </section>
@@ -73,24 +80,24 @@ export default function EliteFitClub() {
       <section className="py-20 bg-gray-100">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-extrabold text-navy uppercase mb-10">
-            What You’ll Get
+            STRENGTH. CONDITIONING. COMMUNITY.
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: "Total Body Workouts",
-                desc: "Each session focuses on strength, power, mobility, and endurance to help you move and perform better every day.",
-                img: "/images/workout.png",
+                title: "CLUB Strength",
+                desc: "Boost your strength and explosiveness with Olympic lift variations, resistance training, and progressive overload. Technical coaching ensures safe, measurable progress every session, whether you're building power or perfecting your form. → Barbells. Precision. Progress you can feel.",
+                img: "/images/strength.png",
               },
               {
-                title: "Expert Coaching",
-                desc: "Our certified trainers bring real sports science and motivation to every workout — no guesswork, just results.",
-                img: "/images/coach.png",
+                title: "CLUB Sweat",
+                desc: "Full-body conditioning that combines strength, cardio, and athletic movement in a high-energy, coach-led format. Perfect for those who thrive on variety, intensity, and community spirit. → Fast-paced. Full-body. Fueled by the squad.",
+                img: "/images/sweat.png",
               },
               {
-                title: "Community & Accountability",
-                desc: "Surround yourself with athletes who push, encourage, and celebrate every milestone with you.",
-                img: "/images/community.png",
+                title: "CLUB Movement",
+                desc: "Enhance fitness through dynamic movement, strength activation, and plyometric drills. This format blends mobility, explosive exercises, and functional strength to boost athleticism and conditioning simultaneously. → Mobility meets power. Move better, jump higher, train smarter.",
+                img: "/images/movement.png",
               },
             ].map((item) => (
               <div
@@ -118,7 +125,7 @@ export default function EliteFitClub() {
       <section className="py-20 bg-navy text-white text-center">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-10">
           {[
-            { stat: "45 Min", label: "High-Intensity Sessions" },
+            { stat: "60 Min", label: "High-Intensity Sessions" },
             { stat: "100%", label: "Coach-Led Every Class" },
             { stat: "365", label: "Days of Motivation" },
           ].map((item) => (
@@ -129,6 +136,10 @@ export default function EliteFitClub() {
           ))}
         </div>
       </section>
+
+{/* ─── WEEKLY FOCUS ─── */}
+
+<WeeklyFocus />
 
       {/* ─── CTA ─── */}
       <section className="py-20 bg-red text-white text-center">

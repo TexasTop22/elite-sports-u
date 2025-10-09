@@ -1,3 +1,12 @@
+/* --------------------------------------
+   External Imports (must be first)
+-------------------------------------- */
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+/* --------------------------------------
+   Tailwind Imports
+-------------------------------------- */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,203 +29,30 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Oswald", sans-serif;
-  overflow-x: hidden; /* Prevents sideways scroll on animations */
+  overflow-x: hidden;
 }
 
-img, video, canvas {
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
+/* ---------- Animations ---------- */
 @keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-/* ---------- Mobile Menu Animations ---------- */
-@keyframes fadeInSlide {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeInSlide {
-  animation: fadeInSlide 0.5s ease-out forwards;
-}
-
-@keyframes slowZoom {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.05);
-  }
-}
-
-.animate-slowZoom {
-  animation: slowZoom 14s ease-in-out infinite alternate;
-}
-
-/* Smooth fade for overlay transitions */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInSlow {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInSlow {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-}
-
-@keyframes fadeSlide {
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeSlide {
-  animation: fadeSlide 0.6s ease-out forwards;
-}
-
-
-.animate-fadeInSlow {
-  animation: fadeInSlow 0.6s ease-out forwards;
-}
-
-.animate-slideIn {
-  animation: slideIn 0.5s ease-out forwards;
-}
-
-.animate-slideOut {
-  animation: slideOut 0.4s ease-in forwards;
-}
-
-.animate-fadeInSlow {
-  animation: fadeInSlow 0.6s ease-out forwards;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
-}
-
-.animate-fadeOut {
-  animation: fadeOut 0.4s ease-in forwards;
-}
-
-@keyframes slowZoom {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.08);
-  }
-}
-
-.animate-slowZoom {
-  animation: slowZoom 15s ease-in-out infinite alternate;
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
   animation: fadeIn 1.5s ease-out;
 }
 
-
-
-/* ---------- Scroll Behavior ---------- */
+/* ---------- Scroll ---------- */
 html {
   scroll-behavior: smooth;
 }
 
-/* ---------- Utility Enhancements ---------- */
-/* For slightly more refined transitions */
+/* ---------- Utilities ---------- */
 .transition-smooth {
   transition: all 0.4s ease-in-out;
 }

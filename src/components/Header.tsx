@@ -210,43 +210,55 @@ export default function Header() {
             {/* Main Navigation */}
             <nav className="flex flex-col items-center justify-center gap-6 text-2xl font-bold uppercase tracking-wide flex-grow">
               {/* Programs Dropdown */}
-              <div className="flex flex-col items-center">
-                <button
-                  onClick={() => setSubmenuOpen(!submenuOpen)}
-                  className="flex items-center gap-2 hover:text-red transition"
-                >
-                  Programs
-                  <ChevronDown
-                    size={22}
-                    className={submenuOpen ? "rotate-180" : ""}
-                  />
-                </button>
-                <div
-                  className={`overflow-hidden transition-all duration-500 ${
-                    submenuOpen ? "max-h-80 mt-3" : "max-h-0"
-                  }`}
-                >
-                  <div className="flex flex-col items-center gap-3 text-lg font-medium normal-case text-white/90">
-                    {programLinks.map((p) => (
-                      <Link
-                        key={p.href}
-                        href={p.href}
-                        onClick={closeMenu}
-                        className="hover:text-red transition"
-                      >
-                        {p.label}
-                      </Link>
-                    ))}
-                    <Link
-                      href="/programs"
-                      onClick={closeMenu}
-                      className="mt-3 pt-3 border-t border-white/20 text-red font-semibold hover:text-white transition"
-                    >
-                      View All Programs →
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              {/* Programs Dropdown (Mobile) */}
+<div className="flex flex-col items-center">
+  <button
+    onClick={() => setSubmenuOpen(!submenuOpen)}
+    className="flex items-center gap-2 hover:text-red transition"
+  >
+    Programs
+    <ChevronDown
+      size={22}
+      className={`transition-transform duration-300 ${
+        submenuOpen ? "rotate-180 text-red" : ""
+      }`}
+    />
+  </button>
+
+  {/* Animated dropdown with red glow */}
+  <div
+    className={`overflow-hidden transition-all duration-500 ease-out ${
+      submenuOpen
+        ? "max-h-80 mt-3 opacity-100 translate-y-0 visible"
+        : "max-h-0 opacity-0 -translate-y-3 invisible"
+    }`}
+  >
+    <div
+      className={`flex flex-col items-center gap-3 text-lg font-medium normal-case text-white/90 bg-black/90 rounded-lg border border-transparent
+        ${submenuOpen ? "border-red shadow-[0_0_20px_rgba(225,6,0,0.6)] animate-pulse-glow" : ""}
+        py-6 px-4 w-72 transition-all duration-500`}
+    >
+      {programLinks.map((p) => (
+        <Link
+          key={p.href}
+          href={p.href}
+          onClick={closeMenu}
+          className="hover:text-red transition"
+        >
+          {p.label}
+        </Link>
+      ))}
+      <Link
+        href="/programs"
+        onClick={closeMenu}
+        className="mt-3 pt-3 border-t border-white/20 text-red font-semibold hover:text-white transition"
+      >
+        View All Programs →
+      </Link>
+    </div>
+  </div>
+</div>
+
 
               {["About", "Locations", "Contact"].map((item) => (
                 <Link
