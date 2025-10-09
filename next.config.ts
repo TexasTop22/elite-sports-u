@@ -1,14 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-module.exports = {
+  experimental: {
+    appDir: true,
+  },
+  // 👇 This tells Next.js your "app" folder lives inside /src
+  srcDir: true,
   images: {
-    qualities: [75, 100],
+    quality: 90,
   },
 };
-
 
 export default nextConfig;
