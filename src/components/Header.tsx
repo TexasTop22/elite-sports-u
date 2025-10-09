@@ -80,6 +80,13 @@ export default function Header() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  // 🔗 Unified Program Links (used in both dropdowns)
+  const programLinks = [
+    { href: "/programs/elite-fit-club", label: "Elite Fit Club" },
+    { href: "/programs/athletic-performance", label: "Athletic Performance Training" },
+    { href: "/programs/youth-speed-training", label: "Youth Speed & Agility" },
+  ];
+
   return (
     <>
       {/* ---------- TOP HEADER ---------- */}
@@ -101,28 +108,57 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop Nav */}
+          {/* 💻 Desktop Navigation */}
           <nav className="hidden md:flex gap-8 text-sm font-semibold uppercase text-white">
-            <div className="relative group">
-              <button className="flex items-center gap-1 hover:text-red transition">
-                Programs
-                <ChevronDown size={18} />
-              </button>
-              <div className="absolute hidden group-hover:block left-0 mt-3 bg-black text-white rounded-md shadow-lg overflow-hidden">
-                <Link
-                  href="/programs/elite-fit-club"
-                  className="block px-5 py-3 text-sm hover:bg-red hover:text-white transition"
-                >
-                  Elite Fit Club
-                </Link>
-                <Link
-                  href="/programs/athletic-performance"
-                  className="block px-5 py-3 text-sm hover:bg-red hover:text-white transition"
-                >
-                  Athletic Performance Training
-                </Link>
-              </div>
-            </div>
+            {/* Dropdown Menu */}
+            <div
+  className="relative group"
+  onMouseEnter={() => setSubmenuOpen(true)}
+  onMouseLeave={() => setSubmenuOpen(false)}
+>
+  <button className="flex items-center gap-1 hover:text-red transition">
+    Programs
+    <ChevronDown
+      size={18}
+      className={`transition-transform duration-300 ${
+        submenuOpen ? "rotate-180 text-red" : ""
+      }`}
+    />
+  </button>
+
+  {/* Animated Dropdown with Red Glow */}
+  <div
+    className={`absolute left-0 mt-3 bg-black text-white rounded-md shadow-lg overflow-hidden min-w-[240px]
+      transition-all duration-300 ease-out border border-transparent
+      ${submenuOpen
+        ? "opacity-100 translate-y-0 visible border-red shadow-[0_0_15px_rgba(225,6,0,0.6)]"
+        : "opacity-0 -translate-y-3 invisible border-transparent shadow-none"
+      }
+    `}
+  >
+    <div className="flex flex-col py-2">
+      {programLinks.map((p) => (
+        <Link
+          key={p.href}
+          href={p.href}
+          className="block px-5 py-3 text-sm hover:bg-red hover:text-white transition"
+        >
+          {p.label}
+        </Link>
+      ))}
+      <div className="border-t border-white/10">
+        <Link
+          href="/programs"
+          className="block px-5 py-3 text-sm text-gray-300 hover:text-white hover:bg-navy transition font-semibold tracking-wide"
+        >
+          View All Programs →
+        </Link>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
             {["About", "Locations", "Contact"].map((item) => (
               <Link
@@ -135,7 +171,7 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Hamburger */}
+          {/* 📱 Hamburger Menu */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden text-white hover:text-red focus:outline-none p-2 border border-white/40 rounded-md"
@@ -147,7 +183,8 @@ export default function Header() {
       </header>
 
       {/* ---------- MOBILE MENU (PORTAL) ---------- */}
-      {mounted && menuOpen &&
+      {mounted &&
+        menuOpen &&
         createPortal(
           <div className="fixed inset-0 z-[9999] flex flex-col text-white animate-fadeSlide bg-gradient-to-b from-[#0b1a2a] via-[#07121d] to-black">
             {/* Top Section */}
@@ -170,7 +207,7 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Main Nav */}
+            {/* Main Navigation */}
             <nav className="flex flex-col items-center justify-center gap-6 text-2xl font-bold uppercase tracking-wide flex-grow">
               {/* Programs Dropdown */}
               <div className="flex flex-col items-center">
@@ -186,23 +223,26 @@ export default function Header() {
                 </button>
                 <div
                   className={`overflow-hidden transition-all duration-500 ${
-                    submenuOpen ? "max-h-40 mt-3" : "max-h-0"
+                    submenuOpen ? "max-h-80 mt-3" : "max-h-0"
                   }`}
                 >
                   <div className="flex flex-col items-center gap-3 text-lg font-medium normal-case text-white/90">
+                    {programLinks.map((p) => (
+                      <Link
+                        key={p.href}
+                        href={p.href}
+                        onClick={closeMenu}
+                        className="hover:text-red transition"
+                      >
+                        {p.label}
+                      </Link>
+                    ))}
                     <Link
-                      href="/programs/elite-fit-club"
+                      href="/programs"
                       onClick={closeMenu}
-                      className="hover:text-red transition"
+                      className="mt-3 pt-3 border-t border-white/20 text-red font-semibold hover:text-white transition"
                     >
-                      Elite Fit Club
-                    </Link>
-                    <Link
-                      href="/programs/athletic-performance"
-                      onClick={closeMenu}
-                      className="hover:text-red transition"
-                    >
-                      Athletic Performance Training
+                      View All Programs →
                     </Link>
                   </div>
                 </div>
@@ -220,7 +260,7 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Bottom Section */}
+            {/* Bottom CTA Buttons */}
             <div className="flex flex-col items-center gap-6 pb-8">
               <div className="flex flex-col gap-3 w-10/12">
                 <Link
@@ -239,6 +279,7 @@ export default function Header() {
                 </Link>
               </div>
 
+              {/* Social Links */}
               <div className="flex justify-center gap-6 mt-6 text-white/80 text-xl">
                 <a href="#" aria-label="Facebook" className="hover:text-red transition">
                   F
