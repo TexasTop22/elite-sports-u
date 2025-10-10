@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import WeeklyFocus from "../../../components/WeeklyFocus";
+import Footer from "../../../components/Footer";
 
 
 export default function EliteFitClub() {
@@ -153,6 +154,7 @@ export default function EliteFitClub() {
           Book a Free Session
         </Link>
       </section>
+      <Footer />
     </main>
   );
 }

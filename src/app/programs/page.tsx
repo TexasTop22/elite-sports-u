@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "../../components/Footer";
 
 export default function ProgramsPage() {
   const programs = [
@@ -88,6 +89,7 @@ export default function ProgramsPage() {
           Book Your Free Session
         </Link>
       </section>
+      <Footer />
     </main>
   );
 }

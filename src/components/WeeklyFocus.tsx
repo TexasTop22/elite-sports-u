@@ -18,13 +18,13 @@ export default function WeeklyFocus() {
   };
 
   const days = [
-    { day: "Sunday", focus: "Upper Body & Agility", img: "/images/sunday.png" },
-    { day: "Monday", focus: "Lower Body & Linear Speed", img: "/images/monday.png" },
-    { day: "Tuesday", focus: "Upper Body & Agility", img: "/images/tuesday.png" },
-    { day: "Wednesday", focus: "Full Body", img: "/images/wednesday.png" },
-    { day: "Thursday", focus: "Lower Body & Linear Speed", img: "/images/thursday.png" },
-    { day: "Friday", focus: "Upper Body & Agility", img: "/images/friday.png" },
-    { day: "Saturday", focus: "Full Body & Conditioning", img: "/images/saturday.png" },
+    { day: "Sunday", focus: "Elite Fit Club: RECOVERY", img: "/images/sunday.png" },
+    { day: "Monday", focus: "Elite Fit Club: Movement", img: "/images/monday.png" },
+    { day: "Tuesday", focus: "Elite Fit Club: Strength", img: "/images/tuesday.png" },
+    { day: "Wednesday", focus: "Elite Fit Club: Strength", img: "/images/tuesday.png" },
+    { day: "Thursday", focus: "Elite Fit Club: Movement", img: "/images/monday.png" },
+    { day: "Friday", focus: "Elite Fit Club : SWEAT fitness LAB", img: "/images/saturday.png" },
+    { day: "Saturday", focus: "Elite Fit Club : SWEAT fitness LAB", img: "/images/saturday.png" },
   ];
 
   return (

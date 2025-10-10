@@ -5,6 +5,7 @@ import TrainingPrograms from "../components/TrainingPrograms";
 import StoryInMotion from "../components/StoryInMotion";
 import Testimonials from "../components/Testimonials";
 import AppPromo from "../components/AppPromo";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -97,26 +98,39 @@ export default function Home() {
 <Testimonials />
 <AppPromo />   
 
-      
+{/* ───── CTA Banner ───── */}
+<section className="relative py-20 text-white text-center overflow-hidden">
+  {/* Background Image */}
+  <div className="absolute inset-0">
+    <Image
+      src="/images/elite-fit-hero.png" // ← Replace with your preferred background image path
+      alt="Athletes training hard"
+      fill
+      className="object-cover brightness-[0.6]"
+      priority
+    />
+    {/* Red overlay tint */}
+    <div className="absolute inset-0 bg-red/70 mix-blend-multiply" />
+  </div>
 
-      {/* ───── CTA Banner ───── */}
-      <section className="py-20 bg-red text-white text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          Ready to Take Your Training to the Next Level?
-        </h2>
-        <Link
-          href="/contact"
-          className="inline-block mt-4 bg-white text-red font-bold px-10 py-4 rounded-full hover:bg-gray-100 transition"
-        >
-          Join Now
-        </Link>
-      </section>
+  {/* Content */}
+  <div className="relative z-10 max-w-3xl mx-auto px-6">
+    <h2 className="text-3xl md:text-4xl font-extrabold mb-6 uppercase leading-snug">
+      Ready to Take Your Training to the Next Level?
+    </h2>
+    <Link
+      href="/contact"
+      className="inline-block mt-4 bg-white text-red font-bold px-10 py-4 rounded-full hover:bg-gray-100 transition shadow-lg shadow-red/50"
+    >
+      Join Now
+    </Link>
+  </div>
+</section>
+
 
       {/* ───── FOOTER ───── */}
-      <footer className="bg-navy text-white text-center py-8 text-sm">
-        <p>© {new Date().getFullYear()} Elite Sports U · All Rights Reserved</p>
-        <p className="mt-2 text-red font-semibold">Train · Perform · Dominate</p>
-      </footer>
+      <Footer />
+     
     </main>
   );
 }
