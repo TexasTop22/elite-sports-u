@@ -1,6 +1,7 @@
 /* --------------------------------------
-   External Imports (must be first)
+   External Imports (must come first)
 -------------------------------------- */
+@import "aos/dist/aos.css";
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 
@@ -81,3 +82,31 @@ html {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
+/* --------------------------------------
+   Elite Sports U Section Heading Styles
+-------------------------------------- */
+
+.section-heading {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #001F3F; /* Navy base color */
+  letter-spacing: 1px;
+}
+
+.section-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  height: 4px;
+  width: 0%;
+  background-color: #E10600; /* Red accent */
+  transition: width 0.8s ease-out;
+}
+
+/* When animated into view */
+.section-heading.aos-animate::after {
+  width: 100%;
+}

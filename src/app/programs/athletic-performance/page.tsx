@@ -162,7 +162,7 @@ export default function AthleticPerformance() {
             Ready to Perform at Your Peak?
           </h2>
           <Link
-            href="/contact"
+            href="https://app.glofox.com/portal/#/branch/6350b2f1c42ac18c9b0dc8e5/memberships"
             className="inline-block mt-4 bg-white text-red font-bold px-10 py-4 rounded-full hover:bg-gray-100 transition shadow-lg shadow-red/50"
           >
             Start Now
