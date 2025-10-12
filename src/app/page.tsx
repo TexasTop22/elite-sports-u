@@ -6,10 +6,13 @@ import StoryInMotion from "../components/StoryInMotion";
 import Testimonials from "../components/Testimonials";
 import AppPromo from "../components/AppPromo";
 import Footer from "../components/Footer";
+import VisitorModal from "../components/VisitorModal";
+
 
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen bg-white text-gray-900">
+      <VisitorModal />
       
 {/* ───── HERO ───── */}
 <section className="relative flex flex-col justify-between items-center overflow-hidden bg-black h-screen">
