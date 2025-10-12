@@ -84,7 +84,7 @@ export default function Header() {
   const programLinks = [
     { href: "/programs/elite-fit-club", label: "Elite Fit Club" },
     { href: "/programs/athletic-performance", label: "Athletic Performance Training" },
-    { href: "/programs/youth-speed-training", label: "Youth Speed & Agility" },
+    
   ];
 
   return (

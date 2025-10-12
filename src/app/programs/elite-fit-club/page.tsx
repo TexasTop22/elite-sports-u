@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import WeeklyFocus from "../../../components/WeeklyFocus";
+import WeeklyFocus from "../../../components/WeeklyFocus._elitefit";
 import Footer from "../../../components/Footer";
+import { Dumbbell, Droplets, Activity } from "lucide-react";
 
 
 export default function EliteFitClub() {
@@ -85,39 +86,45 @@ export default function EliteFitClub() {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              {
-                title: "CLUB Strength",
-                desc: "Boost your strength and explosiveness with Olympic lift variations, resistance training, and progressive overload. Technical coaching ensures safe, measurable progress every session, whether you're building power or perfecting your form. → Barbells. Precision. Progress you can feel.",
-                img: "/images/strength.png",
-              },
-              {
-                title: "CLUB Sweat",
-                desc: "Full-body conditioning that combines strength, cardio, and athletic movement in a high-energy, coach-led format. Perfect for those who thrive on variety, intensity, and community spirit. → Fast-paced. Full-body. Fueled by the squad.",
-                img: "/images/sweat.png",
-              },
-              {
-                title: "CLUB Movement",
-                desc: "Enhance fitness through dynamic movement, strength activation, and plyometric drills. This format blends mobility, explosive exercises, and functional strength to boost athleticism and conditioning simultaneously. → Mobility meets power. Move better, jump higher, train smarter.",
-                img: "/images/movement.png",
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="bg-white rounded-xl shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] overflow-hidden"
-              >
-                <Image
-                  src={item.img}
-                  alt={item.title}
-                  width={600}
-                  height={400}
-                  className="w-full h-56 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-navy mb-3">{item.title}</h3>
-                  <p className="text-gray-700 leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
+  {
+    title: "CLUB Strength",
+    desc: "Boost your strength and explosiveness with Olympic lift variations, resistance training, and progressive overload. Technical coaching ensures safe, measurable progress every session, whether you're building power or perfecting your form. → Barbells. Precision. Progress you can feel.",
+    img: "/images/strength.png",
+    icon: <Dumbbell className="text-red w-6 h-6 inline-block mr-2" />,
+  },
+  {
+    title: "CLUB Sweat",
+    desc: "Full-body conditioning that combines strength, cardio, and athletic movement in a high-energy, coach-led format. Perfect for those who thrive on variety, intensity, and community spirit. → Fast-paced. Full-body. Fueled by the squad.",
+    img: "/images/sweat.png",
+    icon: <Droplets className="text-red w-6 h-6 inline-block mr-2" />,
+  },
+  {
+    title: "CLUB Movement",
+    desc: "Enhance fitness through dynamic movement, strength activation, and plyometric drills. This format blends mobility, explosive exercises, and functional strength to boost athleticism and conditioning simultaneously. → Mobility meets power. Move better, jump higher, train smarter.",
+    img: "/images/movement.png",
+    icon: <Activity className="text-red w-6 h-6 inline-block mr-2" />,
+  },
+].map((item) => (
+  <div
+    key={item.title}
+    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] overflow-hidden"
+  >
+    <Image
+      src={item.img}
+      alt={item.title}
+      width={600}
+      height={400}
+      className="w-full h-56 object-cover"
+    />
+    <div className="p-6">
+      <h3 className="text-xl font-bold text-navy mb-3 flex items-center justify-center">
+        {item.icon}
+        {item.title}
+      </h3>
+      <p className="text-gray-700 leading-relaxed">{item.desc}</p>
+    </div>
+  </div>
+))}
           </div>
         </div>
       </section>
@@ -142,18 +149,34 @@ export default function EliteFitClub() {
 
 <WeeklyFocus />
 
-      {/* ─── CTA ─── */}
-      <section className="py-20 bg-red text-white text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold mb-4 uppercase">
-          Ready to Build Your Best Self?
-        </h2>
-        <Link
-          href="/contact"
-          className="inline-block mt-4 bg-white text-red font-bold px-10 py-4 rounded-full hover:bg-gray-100 transition"
-        >
-          Book a Free Session
-        </Link>
-      </section>
+      {/* ───── CTA Banner ───── */}
+<section className="relative py-20 text-white text-center overflow-hidden">
+  {/* Background Image */}
+  <div className="absolute inset-0">
+    <Image
+      src="/images/elite-fit-hero.png" // ← Replace with your preferred background image path
+      alt="Athletes training hard"
+      fill
+      className="object-cover brightness-[0.6]"
+      priority
+    />
+    {/* Red overlay tint */}
+    <div className="absolute inset-0 bg-red/70 mix-blend-multiply" />
+  </div>
+
+  {/* Content */}
+  <div className="relative z-10 max-w-3xl mx-auto px-6">
+    <h2 className="text-3xl md:text-4xl font-extrabold mb-6 uppercase leading-snug">
+      Ready to Build Your Best Self?
+    </h2>
+    <Link
+      href="/contact"
+      className="inline-block mt-4 bg-white text-red font-bold px-10 py-4 rounded-full hover:bg-gray-100 transition shadow-lg shadow-red/50"
+    >
+      Join Now
+    </Link>
+  </div>
+</section>
       <Footer />
     </main>
   );
