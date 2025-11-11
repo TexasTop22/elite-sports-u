@@ -102,12 +102,12 @@ export default function WhatIsTraining() {
           <div className="relative w-full h-64 sm:h-80 md:h-[340px] rounded-lg overflow-hidden shadow-lg group">
             {/* Video */}
             <video
-              ref={videoRef}
-              src="/videos/Elite U Morning Workout.mp4"
-              className="absolute inset-0 w-full h-full object-cover z-0"
-              loop
-              playsInline
-            />
+  ref={videoRef}
+  src="https://x3o8ckasms8hobdk.public.blob.vercel-storage.com/Elite%20U%20Morning%20Workout-9KKemKaRFIpg7mKq7kPhptwLUvCQzL.mp4"
+  className="absolute inset-0 w-full h-full object-cover z-0"
+  loop
+  playsInline
+/>
 
             {/* Overlay and Main Controls */}
             <div
