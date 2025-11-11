@@ -24,7 +24,7 @@ export default function AppPromo() {
         {/* RIGHT — Text and CTA */}
         <div className="text-left md:w-1/2">
           <h2 className="text-4xl md:text-5xl font-extrabold uppercase leading-tight mb-6">
-            The Official <span className="text-red">Elite Sports</span> App
+            The Official <span className="text-red">Elite Sports University</span> App
           </h2>
 
           <ul className="space-y-4 text-lg">

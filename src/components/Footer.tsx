@@ -11,7 +11,7 @@ export default function Footer() {
             <img src="/images/logo.png" alt="Elite Sports U Logo" className="h-10 w-auto" />
           </div>
           <ul className="space-y-3 text-gray-300">
-            <li><Link href="/locations" className="hover:text-red transition">Locations</Link></li>
+            <li><Link href="/locations" className="hover:text-red transition">Elite U</Link></li>
             <li><Link href="/accessibility" className="hover:text-red transition">Accessibility Statement</Link></li>
             <li><Link href="/download-app" className="hover:text-red transition">Download App</Link></li>
             <li><Link href="/careers" className="hover:text-red transition">Careers</Link></li>

@@ -67,13 +67,11 @@ export default function EliteFitClub() {
           <p className="text-lg text-gray-700 leading-relaxed">
             Welcome to ELITE CLUB FIT, where you will enjoy UNLIMITED access and a 
             unified experience designed to build strength, enhance conditioning, 
-            and unlock your athletic potential. 
+            and push you taoward your fitness goals. 
             Elite Fit Club is more than just a workout — it’s a community built
-            on discipline, energy, and results. Designed for youth and adults,
-            this program blends functional movement, strength training, and
-            endurance conditioning for total athletic development.
+            on discipline, energy, and results.
           
-          Ready to Train With Us? Check the schedule, book your spot, and discover the CLUB difference. These group fitness classes cater to all levels, offering total-body workouts that deliver results in no time.
+          
           </p>
         </div>
       </section>

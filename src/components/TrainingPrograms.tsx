@@ -7,7 +7,7 @@ export default function TrainingPrograms() {
       <div className="max-w-6xl mx-auto px-6">
         {/* Heading */}
         <h2 className="text-4xl md:text-5xl font-extrabold text-navy uppercase mb-12">
-          Elite Fit <span className="text-red">and </span> Athletic Performance
+          Elite Fit Club <span className="text-red">and </span> Athletic Performance
         </h2>
 
         {/* Program Grid */}
@@ -28,9 +28,7 @@ export default function TrainingPrograms() {
               Elite Fit Training
             </h3>
             <p className="mt-4 text-gray-700 text-lg max-w-md">
-              Group-based workouts that build endurance, strength, and discipline
-              in a team setting. Designed for youth and adults who want to move,
-              lift, and feel like athletes — no matter their fitness level.
+              Elite Fit Club offers group-based workouts designed for adults, catering to fitness goals whether its weight gain, weight loss, muscle toning, or maintenance,  these class adaptable to any fitness level.
             </p>
 
             <Link

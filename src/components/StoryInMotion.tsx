@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Play, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,29 +12,33 @@ import "swiper/css/pagination";
 
 const videos = [
   {
-    title: "Elite Video 1",
-    thumbnail: "/videos/video-thumb1.jpg",
-    src: "/videos/elite-video.mp4",
+    title: "Come Be Elite with Ryan",
+    thumbnail: "/videos/Ryan Come Be Elite-thumb.jpg",
+    src: "/videos/Ryan Come Be Elite.mp4",
   },
   {
-    title: "Elite Video 2",
-    thumbnail: "/videos/video-thumb2.jpg",
-    src: "/videos/coach-impact.mp4",
+    title: "Come Be Elite with Mook",
+    thumbnail: "/videos/Mook Come Be Elite-thumb.jpg",
+    src: "/videos/Mook Come Be Elite.mp4",
   },
   {
-    title: "Elite Video 3",
-    thumbnail: "/videos/video-thumb3.jpg",
-    src: "/videos/in-season.mp4",
-  },
-  {
-    title: "Elite Video 4",
-    thumbnail: "/videos/video-thumb4.jpg",
-    src: "/videos/character.mp4",
+    title: "Community Come Be Elite",
+    thumbnail: "/videos/Community Come Be Elite-thumb.jpg",
+    src: "/videos/Community Come Be Elite.mp4",
   },
 ];
 
 export default function StoryInMotion() {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  // Allow closing modal with ESC key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveVideo(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <section className="relative py-24 bg-navy text-white overflow-hidden">
@@ -90,7 +94,7 @@ export default function StoryInMotion() {
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
           }}
-          className="pb-16" // add more bottom padding
+          className="pb-16"
         >
           {videos.map((video, index) => (
             <SwiperSlide key={index}>
@@ -124,25 +128,35 @@ export default function StoryInMotion() {
           ))}
         </Swiper>
 
-        {/* Pagination moved BELOW videos */}
+        {/* Pagination */}
         <div className="swiper-pagination mt-8 !static"></div>
 
         {/* Modal Video Player */}
         {activeVideo && (
-          <div className="fixed inset-0 bg-black/90 flex justify-center items-center z-50 p-6">
-            <div className="relative w-full max-w-3xl">
+          <div
+            className="fixed inset-0 bg-black/90 flex justify-center items-center z-[9999] p-6"
+            onClick={() => setActiveVideo(null)}
+          >
+            {/* Close Button (anchored to viewport) */}
+            <button
+              onClick={() => setActiveVideo(null)}
+              className="absolute top-6 right-6 z-[10000] w-12 h-12 flex items-center justify-center rounded-full bg-red text-white text-3xl font-bold hover:bg-red/80 transition"
+              aria-label="Close video"
+            >
+              ×
+            </button>
+
+            {/* Prevent click propagation when clicking inside video */}
+            <div
+              className="relative w-full max-w-3xl"
+              onClick={(e) => e.stopPropagation()}
+            >
               <video
                 src={activeVideo}
                 controls
                 autoPlay
                 className="w-full rounded-lg shadow-lg"
               />
-              <button
-                onClick={() => setActiveVideo(null)}
-                className="absolute -top-6 -right-6 text-white text-4xl font-bold hover:text-red transition"
-              >
-                ×
-              </button>
             </div>
           </div>
         )}

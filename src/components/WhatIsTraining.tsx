@@ -5,24 +5,24 @@ import { Play, Pause } from "lucide-react";
 
 const accordionItems = [
   {
-    title: "Training",
+    title: "Sports Performance",
     content:
-      "Our program uses Division 1-level strength and conditioning principles to develop speed, power, and discipline for all athletes — youth to adult.",
+      "Our Sports Performance programs are where discipline meets dominance. Speed, strength, skills, and resilience are built here—engineered for athletes to excel when it matters most. From developing youth to sharpening pros, every athlete is trained to elevate .",
   },
   {
-    title: "Facility",
+    title: "Fitness Training",
     content:
-      "Train in a professional-grade environment equipped with turf fields, squat racks, sleds, and recovery tools to maximize performance.",
+      "Elite Fit Club is where fitness meets results. Built on accountability, class‑based energy, and a supportive community, our programs deliver measurable progress and keep you locked in. Every session is designed to challenge, motivate, and transform—because here, consistency creates change.",
   },
   {
-    title: "Character",
+    title: "Nutrition & Recovery",
     content:
-      "We train the person as much as the athlete. Discipline, accountability, and leadership are built into every session.",
+      "Fuel & Protect Body. Build habits that support Elite performance and long-term wellness.",
   },
   {
     title: "Community",
     content:
-      "Every athlete belongs here. Our supportive community celebrates progress, teamwork, and the pursuit of excellence.",
+      "A supportive environment where athletes and fitness enthusiasts thrive, uplift each other, work toward the common goals, and relentlessly pursue excellence.",
   },
 ];
 
@@ -38,7 +38,7 @@ export default function WhatIsTraining() {
           videoRef.current.pause();
           setIsPlaying(false);
         } else {
-          videoRef.current.muted = false; // unmute on play
+          videoRef.current.muted = false;
           await videoRef.current.play();
           setIsPlaying(true);
         }
@@ -50,19 +50,16 @@ export default function WhatIsTraining() {
 
   return (
     <section className="relative w-full py-24 bg-gray-100 border-t border-gray-200 overflow-hidden">
-      {/* Subtle top fade to blend into Hero section */}
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white/40 to-transparent z-0" />
 
       <div className="relative max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-12 items-center md:items-start text-center md:text-left z-10">
-
         {/* LEFT COLUMN */}
         <div className="flex-1">
           <h2 className="text-4xl font-extrabold text-navy uppercase leading-tight">
             What Is <span className="text-red">Elite Training?</span>
           </h2>
           <p className="mt-4 text-gray-700 text-lg border-l-4 border-red pl-4">
-            Training for youth and adults. Modeled after Division 1 strength and
-            conditioning principles.
+            Elite Training is a culture. We train with standards, show up with purpose, and grow through community. It’s movement, mentorship, and mutual accountability—every rep backed by a team that refuses to let you fall short. Here, you don’t just join a gym—you join the culture and the community.
           </p>
 
           <div className="mt-8 flex flex-col gap-4">
@@ -106,28 +103,46 @@ export default function WhatIsTraining() {
             {/* Video */}
             <video
               ref={videoRef}
-              src="/videos/elite-video.mp4"
+              src="/videos/Elite U Morning Workout.mp4"
               className="absolute inset-0 w-full h-full object-cover z-0"
               loop
               playsInline
             />
 
-            {/* Overlay and Controls */}
-            <div className="absolute inset-0 z-10 flex flex-col justify-center items-center bg-black/30 group-hover:bg-black/50 transition">
-              <div className="absolute top-6 left-6 bg-red text-white px-4 py-1 uppercase font-bold text-sm rounded">
-                What’s Elite?
-              </div>
+            {/* Overlay and Main Controls */}
+            <div
+              className={`absolute inset-0 flex flex-col justify-center items-center transition-all duration-500 ${
+                isPlaying
+                  ? "bg-transparent opacity-0 pointer-events-none"
+                  : "bg-black/40 group-hover:bg-black/60 opacity-100"
+              }`}
+            >
+              {!isPlaying && (
+                <div className="absolute top-6 left-6 bg-red text-white px-4 py-1 uppercase font-bold text-sm rounded">
+                  What’s Elite?
+                </div>
+              )}
+
+              {!isPlaying && (
+                <button
+                  onClick={handlePlayPause}
+                  className="flex items-center justify-center w-16 h-16 rounded-full bg-red hover:bg-red/80 transition shadow-[0_0_25px_rgba(255,0,0,0.6)]"
+                >
+                  <Play className="text-white" size={32} />
+                </button>
+              )}
+            </div>
+
+            {/* Small pause button (bottom-right) */}
+            {isPlaying && (
               <button
                 onClick={handlePlayPause}
-                className="flex items-center justify-center w-16 h-16 rounded-full bg-red hover:bg-red/80 transition shadow-[0_0_25px_rgba(255,0,0,0.6)]"
+                className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 transition"
+                aria-label="Pause video"
               >
-                {isPlaying ? (
-                  <Pause className="text-white" size={32} />
-                ) : (
-                  <Play className="text-white" size={32} />
-                )}
+                <Pause size={18} />
               </button>
-            </div>
+            )}
           </div>
 
           <button className="mt-8 bg-red text-white font-bold text-lg uppercase tracking-wide px-10 py-4 rounded-full hover:bg-red/80 transition shadow-lg">
