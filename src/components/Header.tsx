@@ -155,15 +155,16 @@ export default function Header() {
               </div>
             </div>
 
-            {["About", "Contact"].map((item) => (
-              <Link
-                key={item}
-                href={`/${item.toLowerCase()}`}
-                className="hover:text-red transition"
-              >
-                {item}
-              </Link>
-            ))}
+            {["About", "Contact", "Admin"].map((item) => (
+  <Link
+    key={item}
+    href={`/${item.toLowerCase()}`}
+    className="hover:text-red transition"
+  >
+    {item}
+  </Link>
+))}
+
           </nav>
 
           {/* MOBILE MENU BUTTON */}
@@ -238,6 +239,14 @@ export default function Header() {
                   </div>
                 </div>
               </div>
+
+              <Link
+  href="/admin"
+  onClick={closeMenu}
+  className="hover:text-red transition"
+>
+  Admin
+</Link>
 
               {["About", "Contact"].map((item) => (
                 <Link key={item} href={`/${item.toLowerCase()}`}
