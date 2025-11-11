@@ -12,11 +12,12 @@ export async function POST(request) {
 
     const blob = await put(file.name, file, {
       access: "public",
+      token: process.env.BLOB_READ_WRITE_TOKEN, // ✅ automatically created
     });
 
     return NextResponse.json({ url: blob.url });
   } catch (error) {
-    console.error(error);
+    console.error("UPLOAD ERROR:", error);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
