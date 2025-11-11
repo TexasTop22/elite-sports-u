@@ -10,23 +10,16 @@ export async function POST(request) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    // ✅ Automatically choose the right auth setup
-    const options = { access: "public" };
+    // Automatically works with both local and production environments
+    const blob = await put(file.name, file, {
+      access: "public",
+      addRandomSuffix: true, // prevents overwriting files
+    });
 
-    // Use your local token only in dev
-    if (process.env.NODE_ENV === "development") {
-      options.token = process.env.BLOB_READ_WRITE_TOKEN;
-      console.log("🔐 Using local Blob token for dev environment");
-    } else {
-      console.log("☁️ Running in production — Vercel Blob credentials auto-injected");
-    }
-
-    const blob = await put(file.name, file, options);
-
-    console.log("✅ Upload successful:", blob.url);
+    console.log("✅ File uploaded:", blob.url);
     return NextResponse.json({ url: blob.url });
   } catch (error) {
-    console.error("❌ UPLOAD ERROR:", error);
+    console.error("UPLOAD ERROR:", error);
     return NextResponse.json(
       { error: error.message || "Upload failed" },
       { status: 500 }
