@@ -18,11 +18,11 @@ export default function WeeklyFocus() {
   };
 
   const days = [
-    { day: "Sunday", focus: "LineBack Skills Training", img: "/images/sunday_athlete.png" },
+    { day: "Sunday", focus: "LineBack Skills Training", img: "/images/sunday_linebackers_skills.jpg" },
     { day: "Monday", focus: "Ground Zero Performance", img: "/images/monday_athlete.png" },
     { day: "Tuesday", focus: "Elite Athlete Performance", img: "/images/tuesday_athlete.png" },
-    { day: "Wednesday", focus: "Ground Zero Performance", img: "/images/monday_athlete.png" },
-    { day: "Thursday", focus: "Advanced Elite Athlete Performance", img: "/images/saturday_athlete.png" },
+    { day: "Wednesday", focus: "Ground Zero Performance", img: "/images/sportstraining.png" },
+    { day: "Thursday", focus: "Advanced Elite Athlete Performance", img: "/images/IMG_3469.jpg" },
     { day: "Saturday", focus: "Advanced Elite Athlete Performance", img: "/images/saturday_athlete.png" },
   ];
 

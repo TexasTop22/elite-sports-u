@@ -18,13 +18,13 @@ export default function WeeklyFocus() {
   };
 
   const days = [
-    { day: "Sunday", focus: "Elite Fit Club: RECOVERY", img: "/images/sunday.png" },
-    { day: "Monday", focus: "Elite Fit Club: Movement", img: "/images/monday.png" },
-    { day: "Tuesday", focus: "Elite Fit Club: Strength", img: "/images/tuesday.png" },
-    { day: "Wednesday", focus: "Elite Fit Club: Strength", img: "/images/tuesday.png" },
-    { day: "Thursday", focus: "Elite Fit Club: Movement", img: "/images/monday.png" },
+    { day: "Sunday", focus: "Elite Fit Club: RECOVERY", img: "/images/recovery.png" },
+    { day: "Monday", focus: "Elite Fit Club: Movement", img: "/images/movement.png" },
+    { day: "Tuesday", focus: "Elite Fit Club: Strength", img: "/images/strength.png" },
+    { day: "Wednesday", focus: "Elite Fit Club: Sweat", img: "/images/sweat.jpg" },
+    { day: "Thursday", focus: "Elite Fit Club: Movement", img: "/images/monday.jpg" },
     { day: "Friday", focus: "Elite Fit Club : SWEAT fitness LAB", img: "/images/saturday.png" },
-    { day: "Saturday", focus: "Elite Fit Club : SWEAT fitness LAB", img: "/images/saturday.png" },
+    { day: "Saturday", focus: "Elite Fit Club : SWEAT fitness LAB", img: "/images/saturday.jpg" },
   ];
 
   return (
