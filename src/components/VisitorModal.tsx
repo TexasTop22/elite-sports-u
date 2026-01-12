@@ -112,7 +112,7 @@ export default function VisitorModal() {
     try {
       await emailjs.sendForm(
         "service_6r7h4gs",
-        "template_mq6oijm",
+        "template_9essvil",
         e.currentTarget,
         "V4rvsYtvOC3Qp8Vi-"
       );
