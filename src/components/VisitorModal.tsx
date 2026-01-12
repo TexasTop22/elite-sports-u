@@ -12,6 +12,9 @@ export default function VisitorModal() {
   const [showToast, setShowToast] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
+  const [pageUrl, setPageUrl] = useState("");
+  const [referrer, setReferrer] = useState("");
+
   const [location, setLocation] = useState({
     city: "",
     region: "",
@@ -27,6 +30,14 @@ export default function VisitorModal() {
       const timer = setTimeout(() => setShowModal(true), 1200);
       return () => clearTimeout(timer);
     }
+  }, []);
+
+  /* ──────────────────────────────
+     Page + Referrer
+  ────────────────────────────── */
+  useEffect(() => {
+    setPageUrl(window.location.href);
+    setReferrer(document.referrer);
   }, []);
 
   /* ──────────────────────────────
@@ -49,8 +60,6 @@ export default function VisitorModal() {
      UTM capture
   ────────────────────────────── */
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
     const params = new URLSearchParams(window.location.search);
 
     const setValue = (id: string, value: string | null) => {
@@ -135,7 +144,7 @@ export default function VisitorModal() {
           }`}
           style={{ maxHeight: "90vh", display: "flex", flexDirection: "column" }}
         >
-          {/* ─── HEADER ─── */}
+          {/* HEADER */}
           <div className="bg-navy text-white flex items-center justify-between p-5">
             <div className="flex items-center gap-3">
               <Image
@@ -158,7 +167,7 @@ export default function VisitorModal() {
             </button>
           </div>
 
-          {/* ─── BODY ─── */}
+          {/* BODY */}
           <div className="p-6 sm:p-8 bg-gradient-to-b from-white to-gray-50 overflow-y-auto">
             {submitted ? (
               <div className="text-center py-12">
@@ -178,27 +187,84 @@ export default function VisitorModal() {
                   What brings you here today? Tell us how we can help.
                 </p>
 
-                <form onSubmit={handleSubmit}>
-  <input type="hidden" name="form_type" value="visitor" />
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Unified schema */}
+                  <input type="hidden" name="form_type" value="visitor" />
+                  <input type="hidden" name="page_url" value={pageUrl} />
+                  <input type="hidden" name="referrer" value={referrer} />
+                  <input type="hidden" name="utm_source" id="utm_source" />
+                  <input type="hidden" name="utm_medium" id="utm_medium" />
+                  <input type="hidden" name="utm_campaign" id="utm_campaign" />
+                  <input type="hidden" name="visitor_city" value={location.city} />
+                  <input type="hidden" name="visitor_region" value={location.region} />
+                  <input type="hidden" name="visitor_country" value={location.country} />
+                  <input type="hidden" name="phone" value="" />
 
-  <input type="hidden" name="page_url" value={window.location.href} />
-  <input type="hidden" name="referrer" value={document.referrer} />
-  <input type="hidden" name="utm_source" id="utm_source" />
-  <input type="hidden" name="utm_medium" id="utm_medium" />
-  <input type="hidden" name="utm_campaign" id="utm_campaign" />
-  <input type="hidden" name="visitor_city" value={location.city} />
-  <input type="hidden" name="visitor_region" value={location.region} />
-  <input type="hidden" name="visitor_country" value={location.country} />
+                  <select
+                    name="looking_for"
+                    required
+                    className="w-full border border-gray-300 rounded-md p-2"
+                  >
+                    <option value="">What are you looking for?</option>
+                    <option value="Fitness Membership">Fitness Membership</option>
+                    <option value="Athletic Performance Training">
+                      Athletic Performance Training
+                    </option>
+                    <option value="Personal Training">Personal Training</option>
+                    <option value="Youth Speed & Agility">
+                      Youth Speed & Agility
+                    </option>
+                    <option value="Nutrition / Recovery">
+                      Nutrition / Recovery
+                    </option>
+                    <option value="Other">Other</option>
+                  </select>
 
-  <input name="name" />
-  <input name="email" />
-  <select name="looking_for" />
-  <textarea name="message" />
+                  <textarea
+                    name="message"
+                    required
+                    rows={3}
+                    placeholder="Tell us about your goals..."
+                    className="w-full border border-gray-300 rounded-md p-2"
+                  />
 
-  {/* Not used here but MUST exist */}
-  <input type="hidden" name="phone" value="" />
-</form>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Your Name"
+                      className="border border-gray-300 rounded-md p-2"
+                    />
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="Your Email"
+                      className="border border-gray-300 rounded-md p-2"
+                    />
+                  </div>
 
+                  <div className="flex items-center justify-between mt-4">
+                    <label className="flex items-center text-sm text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={dontShowAgain}
+                        onChange={handleCheckbox}
+                        className="mr-2 accent-red"
+                      />
+                      Don’t show again
+                    </label>
+
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="bg-red text-white px-6 py-2 rounded-md font-bold hover:bg-navy transition disabled:opacity-60"
+                    >
+                      {submitting ? "Sending..." : "Submit"}
+                    </button>
+                  </div>
+                </form>
               </>
             )}
           </div>
