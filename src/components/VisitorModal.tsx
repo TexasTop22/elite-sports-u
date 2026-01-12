@@ -178,80 +178,27 @@ export default function VisitorModal() {
                   What brings you here today? Tell us how we can help.
                 </p>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Tracking */}
-                  <input type="hidden" name="page_url" value={typeof window !== "undefined" ? window.location.href : ""} />
-                  <input type="hidden" name="referrer" value={typeof document !== "undefined" ? document.referrer : ""} />
-                  <input type="hidden" name="utm_source" id="utm_source" />
-                  <input type="hidden" name="utm_medium" id="utm_medium" />
-                  <input type="hidden" name="utm_campaign" id="utm_campaign" />
-                  <input type="hidden" name="visitor_city" value={location.city} />
-                  <input type="hidden" name="visitor_region" value={location.region} />
-                  <input type="hidden" name="visitor_country" value={location.country} />
+                <form onSubmit={handleSubmit}>
+  <input type="hidden" name="form_type" value="visitor" />
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-800 mb-1">
-                      What are you looking for?
-                    </label>
-                    <select
-                      name="looking_for"
-                      required
-                      className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red"
-                    >
-                      <option value="">Select an option</option>
-                      <option value="Fitness Membership">Fitness Membership</option>
-                      <option value="Athletic Performance Training">Athletic Performance Training</option>
-                      <option value="Personal Training">Personal Training</option>
-                      <option value="Youth Speed & Agility">Youth Speed & Agility</option>
-                      <option value="Nutrition / Recovery">Nutrition / Recovery</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
+  <input type="hidden" name="page_url" value={window.location.href} />
+  <input type="hidden" name="referrer" value={document.referrer} />
+  <input type="hidden" name="utm_source" id="utm_source" />
+  <input type="hidden" name="utm_medium" id="utm_medium" />
+  <input type="hidden" name="utm_campaign" id="utm_campaign" />
+  <input type="hidden" name="visitor_city" value={location.city} />
+  <input type="hidden" name="visitor_region" value={location.region} />
+  <input type="hidden" name="visitor_country" value={location.country} />
 
-                  <textarea
-                    name="message"
-                    rows={3}
-                    placeholder="Tell us about your goals..."
-                    className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red"
-                  />
+  <input name="name" />
+  <input name="email" />
+  <select name="looking_for" />
+  <textarea name="message" />
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Your Name"
-                      required
-                      className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red"
-                    />
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Your Email"
-                      required
-                      className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red"
-                    />
-                  </div>
+  {/* Not used here but MUST exist */}
+  <input type="hidden" name="phone" value="" />
+</form>
 
-                  <div className="flex items-center justify-between mt-4">
-                    <label className="flex items-center text-sm text-gray-700">
-                      <input
-                        type="checkbox"
-                        checked={dontShowAgain}
-                        onChange={handleCheckbox}
-                        className="mr-2 accent-red"
-                      />
-                      Don’t show again
-                    </label>
-
-                    <button
-                      type="submit"
-                      disabled={submitting}
-                      className="bg-red text-white px-6 py-2 rounded-md font-bold hover:bg-navy transition disabled:opacity-60"
-                    >
-                      {submitting ? "Sending..." : "Submit"}
-                    </button>
-                  </div>
-                </form>
               </>
             )}
           </div>

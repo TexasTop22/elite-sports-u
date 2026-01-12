@@ -70,80 +70,30 @@ export default function ContactPage() {
               possible.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid md:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-sm font-semibold mb-1">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
-                    placeholder="Your name"
-                  />
-                </div>
+            <form onSubmit={handleSubmit}>
+  <input type="hidden" name="form_type" value="contact" />
 
-                <div>
-                  <label className="block text-sm font-semibold mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
-                    placeholder="you@example.com"
-                  />
-                </div>
-              </div>
+  <input type="hidden" name="page_url" value={window.location.href} />
+  <input type="hidden" name="referrer" value={document.referrer} />
 
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Phone (optional)
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
-                  placeholder="(xxx) xxx-xxxx"
-                />
-              </div>
+  {/* Marketing fields exist but empty */}
+  <input type="hidden" name="utm_source" value="" />
+  <input type="hidden" name="utm_medium" value="" />
+  <input type="hidden" name="utm_campaign" value="" />
+  <input type="hidden" name="visitor_city" value="" />
+  <input type="hidden" name="visitor_region" value="" />
+  <input type="hidden" name="visitor_country" value="" />
 
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  required
-                  rows={5}
-                  className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
-                  placeholder="Tell us how we can help..."
-                />
-              </div>
+  {/* Core fields */}
+  <input name="name" />
+  <input name="email" />
+  <input name="phone" />
+  <textarea name="message" />
 
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-red px-8 py-3 font-bold uppercase tracking-wide text-white hover:bg-red/80 transition shadow-[0_0_20px_rgba(225,6,0,0.6)] disabled:opacity-60"
-              >
-                <Send className="w-4 h-4" />
-                {status === "loading" ? "Sending..." : "Send Message"}
-              </button>
+  {/* Visitor-only field still exists */}
+  <input type="hidden" name="looking_for" value="" />
+</form>
 
-              {status === "success" && (
-                <p className="text-sm text-emerald-400 mt-2">
-                  Thank you! Your message has been sent.
-                </p>
-              )}
-              {status === "error" && (
-                <p className="text-sm text-red-400 mt-2">
-                  Something went wrong. Please try again later.
-                </p>
-              )}
-            </form>
           </div>
 
           {/* CONTACT INFO PANEL */}
