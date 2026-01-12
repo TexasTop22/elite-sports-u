@@ -24,12 +24,10 @@ export async function POST(req: NextRequest) {
     });
 
     await transporter.sendMail({
-      from: `"Elite Sports U Website" <${
-        process.env.SMTP_FROM || process.env.SMTP_USER
-      }>`,
+      from: `"Elite Sports U Website" <${process.env.SMTP_USER}>`,
       to: "elitesportsuniversity@gmail.com",
       subject: `New contact form submission from ${name}`,
-      replyTo: email,
+      replyTo: process.env.SMTP_USER,
       text: `
 New message from the Elite Sports U website:
 
