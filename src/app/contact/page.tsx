@@ -1,40 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Send } from "lucide-react";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
 
     try {
-      const res = await fetch("/api/contact", {
+      const formData = new FormData(e.currentTarget);
+
+      await fetch("https://formsubmit.co/elitesportsuniversity@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: formData,
       });
 
-      if (!res.ok) throw new Error("Request failed");
-
       setStatus("success");
-      setFormData({ name: "", email: "", phone: "", message: "" });
+      e.currentTarget.reset();
     } catch (err) {
       console.error(err);
       setStatus("error");
@@ -52,7 +39,7 @@ export default function ContactPage() {
             className="w-full h-full border-0"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+          />
         </div>
       </section>
 
@@ -64,6 +51,7 @@ export default function ContactPage() {
             <h1 className="text-3xl md:text-4xl font-extrabold uppercase mb-4">
               Contact <span className="text-red">Elite Sports U</span>
             </h1>
+
             <p className="text-gray-200 mb-8 max-w-xl">
               Have questions about memberships, training programs, or camps?
               Send us a message and our team will get back to you as soon as
@@ -71,6 +59,16 @@ export default function ContactPage() {
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
+              {/* FormSubmit config */}
+              <input type="hidden" name="_subject" value="Elite Sports U Contact Form" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input
+                type="hidden"
+                name="Page URL"
+                value={typeof window !== "undefined" ? window.location.href : ""}
+              />
+
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-semibold mb-1">
@@ -78,10 +76,8 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="text"
-                    name="name"
+                    name="Name"
                     required
-                    value={formData.name}
-                    onChange={handleChange}
                     className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
                     placeholder="Your name"
                   />
@@ -93,10 +89,8 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="email"
-                    name="email"
+                    name="Email"
                     required
-                    value={formData.email}
-                    onChange={handleChange}
                     className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
                     placeholder="you@example.com"
                   />
@@ -109,9 +103,7 @@ export default function ContactPage() {
                 </label>
                 <input
                   type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
+                  name="Phone"
                   className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
                   placeholder="(xxx) xxx-xxxx"
                 />
@@ -122,11 +114,9 @@ export default function ContactPage() {
                   Message
                 </label>
                 <textarea
-                  name="message"
+                  name="Message"
                   required
                   rows={5}
-                  value={formData.message}
-                  onChange={handleChange}
                   className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
                   placeholder="Tell us how we can help..."
                 />
@@ -179,12 +169,6 @@ export default function ContactPage() {
                   elitesportsuniversity@gmail.com
                 </a>
               </div>
-
-              {/* Optional phone if/when you want it */}
-              {/* <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-red mt-0.5" />
-                <p>(xxx) xxx-xxxx</p>
-              </div> */}
             </div>
           </aside>
         </div>
