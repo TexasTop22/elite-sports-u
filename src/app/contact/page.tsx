@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 export default function ContactPage() {
   const [status, setStatus] = useState<
@@ -13,17 +14,17 @@ export default function ContactPage() {
     setStatus("loading");
 
     try {
-      const formData = new FormData(e.currentTarget);
-
-      await fetch("https://formsubmit.co/elitesportsuniversity@gmail.com", {
-        method: "POST",
-        body: formData,
-      });
+      await emailjs.sendForm(
+        "service_6r7h4gs",
+        "template_9tlcbas",
+        e.currentTarget,
+        "V4rvsYtvOC3Qp8Vi-"
+      );
 
       setStatus("success");
       e.currentTarget.reset();
     } catch (err) {
-      console.error(err);
+      console.error("EmailJS Contact error:", err);
       setStatus("error");
     }
   };
@@ -59,16 +60,6 @@ export default function ContactPage() {
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* FormSubmit config */}
-              <input type="hidden" name="_subject" value="Elite Sports U Contact Form" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input
-                type="hidden"
-                name="Page URL"
-                value={typeof window !== "undefined" ? window.location.href : ""}
-              />
-
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-semibold mb-1">
@@ -76,7 +67,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="text"
-                    name="Name"
+                    name="name"
                     required
                     className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
                     placeholder="Your name"
@@ -89,7 +80,7 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="email"
-                    name="Email"
+                    name="email"
                     required
                     className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
                     placeholder="you@example.com"
@@ -103,7 +94,7 @@ export default function ContactPage() {
                 </label>
                 <input
                   type="tel"
-                  name="Phone"
+                  name="phone"
                   className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"
                   placeholder="(xxx) xxx-xxxx"
                 />
@@ -114,7 +105,7 @@ export default function ContactPage() {
                   Message
                 </label>
                 <textarea
-                  name="Message"
+                  name="message"
                   required
                   rows={5}
                   className="w-full rounded-md bg-slate-900/70 border border-slate-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red"

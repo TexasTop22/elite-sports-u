@@ -1,6 +1,8 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import emailjs from "@emailjs/browser";
 
 export default function VisitorModal() {
   const [showModal, setShowModal] = useState(false);
@@ -8,9 +10,17 @@ export default function VisitorModal() {
   const [submitted, setSubmitted] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [location, setLocation] = useState({ city: "", region: "", country: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  // ── Check localStorage and show modal ──
+  const [location, setLocation] = useState({
+    city: "",
+    region: "",
+    country: "",
+  });
+
+  /* ──────────────────────────────
+     Show modal (localStorage)
+  ────────────────────────────── */
   useEffect(() => {
     const hide = localStorage.getItem("hideVisitorModal");
     if (!hide) {
@@ -19,7 +29,9 @@ export default function VisitorModal() {
     }
   }, []);
 
-  // ── Fetch visitor location ──
+  /* ──────────────────────────────
+     Visitor location
+  ────────────────────────────── */
   useEffect(() => {
     fetch("https://ipapi.co/json")
       .then((res) => res.json())
@@ -33,27 +45,39 @@ export default function VisitorModal() {
       .catch(() => {});
   }, []);
 
-  // ── Auto-fill UTM parameters ──
+  /* ──────────────────────────────
+     UTM capture
+  ────────────────────────────── */
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    const source = params.get("utm_source");
-    const medium = params.get("utm_medium");
-    const campaign = params.get("utm_campaign");
 
-    if (source) document.getElementById("utm_source")?.setAttribute("value", source);
-    if (medium) document.getElementById("utm_medium")?.setAttribute("value", medium);
-    if (campaign) document.getElementById("utm_campaign")?.setAttribute("value", campaign);
+    const params = new URLSearchParams(window.location.search);
+
+    const setValue = (id: string, value: string | null) => {
+      if (!value) return;
+      const el = document.getElementById(id) as HTMLInputElement | null;
+      if (el) el.value = value;
+    };
+
+    setValue("utm_source", params.get("utm_source"));
+    setValue("utm_medium", params.get("utm_medium"));
+    setValue("utm_campaign", params.get("utm_campaign"));
   }, []);
 
-  // ── Handle close ──
+  /* ──────────────────────────────
+     Close modal
+  ────────────────────────────── */
   const handleClose = () => {
-    if (dontShowAgain) localStorage.setItem("hideVisitorModal", "true");
+    if (dontShowAgain) {
+      localStorage.setItem("hideVisitorModal", "true");
+    }
     setFadeOut(true);
     setTimeout(() => setShowModal(false), 400);
   };
 
-  // ── Handle checkbox ──
+  /* ──────────────────────────────
+     Checkbox logic
+  ────────────────────────────── */
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     setDontShowAgain(checked);
@@ -67,21 +91,33 @@ export default function VisitorModal() {
     }
   };
 
-  // ── Handle submit ──
+  /* ──────────────────────────────
+     Submit via EmailJS
+  ────────────────────────────── */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitting) return;
 
-    const formData = new FormData(e.currentTarget);
-    await fetch("https://formsubmit.co/elitesportsuniversity@gmail.com", {
-      method: "POST",
-      body: formData,
-    });
+    setSubmitting(true);
 
-    setSubmitted(true);
-    setTimeout(() => {
-      setFadeOut(true);
-      setTimeout(() => setShowModal(false), 500);
-    }, 2500);
+    try {
+      await emailjs.sendForm(
+        "service_6r7h4gs",
+        "template_mlpk4pu",
+        e.currentTarget,
+        "V4rvsYtvOC3Qp8Vi-"
+      );
+
+      setSubmitted(true);
+
+      setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => setShowModal(false), 500);
+      }, 2500);
+    } catch (err) {
+      console.error("Visitor EmailJS error:", err);
+      setSubmitting(false);
+    }
   };
 
   if (!showModal) return null;
@@ -89,19 +125,15 @@ export default function VisitorModal() {
   return (
     <>
       <div
-        className={`fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity duration-400 ${
+        className={`fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity ${
           fadeOut ? "opacity-0" : "opacity-100"
         }`}
       >
         <div
-          className={`bg-white w-[92%] sm:w-[90%] md:max-w-xl md:rounded-2xl shadow-2xl overflow-hidden relative animate-fadeIn md:mx-auto md:my-10 ${
-            fadeOut ? "animate-fadeOut" : ""
+          className={`bg-white w-[92%] sm:w-[90%] md:max-w-xl md:rounded-2xl shadow-2xl overflow-hidden relative ${
+            fadeOut ? "animate-fadeOut" : "animate-fadeIn"
           }`}
-          style={{
-            maxHeight: "90vh",
-            display: "flex",
-            flexDirection: "column",
-          }}
+          style={{ maxHeight: "90vh", display: "flex", flexDirection: "column" }}
         >
           {/* ─── HEADER ─── */}
           <div className="bg-navy text-white flex items-center justify-between p-5">
@@ -131,78 +163,72 @@ export default function VisitorModal() {
             {submitted ? (
               <div className="text-center py-12">
                 <h3 className="text-2xl font-extrabold text-navy mb-2">
-                  Thank You! 🙌
+                  Thank You!
                 </h3>
                 <p className="text-gray-700">
-                  Your message has been received. We’ll get back to you soon!
+                  Your message has been received. We’ll get back to you soon.
                 </p>
               </div>
             ) : (
               <>
                 <h3 className="text-2xl font-extrabold text-navy mb-2 text-center">
-                  Welcome, Champion 💪
+                  Welcome, Champion
                 </h3>
                 <p className="text-gray-700 text-center mb-6">
-                  What brings you here today? Tell us so we can help you reach your goals!
+                  What brings you here today? Tell us how we can help.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <input type="hidden" name="_subject" value="New Visitor Inquiry" />
-                  <input type="hidden" name="_template" value="table" />
-
-                  {/* Tracking info */}
-                  <input type="hidden" name="Page URL" value={typeof window !== "undefined" ? window.location.href : ""} />
-                  <input type="hidden" name="Referrer" value={typeof document !== "undefined" ? document.referrer : ""} />
-                  <input type="hidden" name="UTM Source" id="utm_source" />
-                  <input type="hidden" name="UTM Medium" id="utm_medium" />
-                  <input type="hidden" name="UTM Campaign" id="utm_campaign" />
-                  <input type="hidden" name="Visitor City" value={location.city} />
-                  <input type="hidden" name="Visitor Region" value={location.region} />
-                  <input type="hidden" name="Visitor Country" value={location.country} />
+                  {/* Tracking */}
+                  <input type="hidden" name="page_url" value={typeof window !== "undefined" ? window.location.href : ""} />
+                  <input type="hidden" name="referrer" value={typeof document !== "undefined" ? document.referrer : ""} />
+                  <input type="hidden" name="utm_source" id="utm_source" />
+                  <input type="hidden" name="utm_medium" id="utm_medium" />
+                  <input type="hidden" name="utm_campaign" id="utm_campaign" />
+                  <input type="hidden" name="visitor_city" value={location.city} />
+                  <input type="hidden" name="visitor_region" value={location.region} />
+                  <input type="hidden" name="visitor_country" value={location.country} />
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-800 mb-1">
                       What are you looking for?
                     </label>
                     <select
-                      name="Looking For"
-                      className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red"
+                      name="looking_for"
                       required
+                      className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red"
                     >
                       <option value="">Select an option</option>
                       <option value="Fitness Membership">Fitness Membership</option>
                       <option value="Athletic Performance Training">Athletic Performance Training</option>
                       <option value="Personal Training">Personal Training</option>
                       <option value="Youth Speed & Agility">Youth Speed & Agility</option>
-                      <option value="Nutrition or Recovery">Nutrition / Recovery</option>
+                      <option value="Nutrition / Recovery">Nutrition / Recovery</option>
                       <option value="Other">Other</option>
                     </select>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-800 mb-1">
-                      How can we help you?
-                    </label>
-                    <textarea
-                      name="Message"
-                      rows={3}
-                      placeholder="Tell us about your goals..."
-                      className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red"
-                    ></textarea>
-                  </div>
+                  <textarea
+                    name="message"
+                    rows={3}
+                    placeholder="Tell us about your goals..."
+                    className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red"
+                  />
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
                     <input
                       type="text"
-                      name="Name"
+                      name="name"
                       placeholder="Your Name"
-                      className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red"
+                      required
+                      className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red"
                     />
                     <input
                       type="email"
-                      name="Email"
+                      name="email"
                       placeholder="Your Email"
-                      className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red"
+                      required
+                      className="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red"
                     />
                   </div>
 
@@ -219,9 +245,10 @@ export default function VisitorModal() {
 
                     <button
                       type="submit"
-                      className="bg-red text-white px-6 py-2 rounded-md font-bold hover:bg-navy transition shadow-md"
+                      disabled={submitting}
+                      className="bg-red text-white px-6 py-2 rounded-md font-bold hover:bg-navy transition disabled:opacity-60"
                     >
-                      Submit
+                      {submitting ? "Sending..." : "Submit"}
                     </button>
                   </div>
                 </form>
@@ -231,10 +258,9 @@ export default function VisitorModal() {
         </div>
       </div>
 
-      {/* ───── Toast Notification ───── */}
       {showToast && (
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-[2100] animate-fadeIn">
-          Preference saved! You won’t see this again.
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-[2100]">
+          Preference saved!
         </div>
       )}
     </>
