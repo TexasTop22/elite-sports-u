@@ -162,6 +162,35 @@ export default function EliteUPage() {
           </div>
         </div>
       </section>
+      
+      {/* ─── CTA SECTION ─── */}
+      <section className="relative py-20 text-center text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/cta-bg.jpg"
+            alt="Athletes training background"
+            fill
+            className="object-cover brightness-[0.6]"
+          />
+          <div className="absolute inset-0 bg-red/70 mix-blend-multiply" />
+        </div>
+
+        <div className="relative z-10 max-w-3xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4 uppercase">
+            Be Part of Something Bigger
+          </h2>
+          <p className="text-lg text-gray-100 mb-6">
+            Connect. Train. Lead. Together, we build stronger athletes and
+            stronger communities.
+          </p>
+          <a
+            href="/contact"
+            className="inline-block mt-4 bg-white text-red font-bold px-10 py-4 rounded-full hover:bg-gray-100 transition shadow-lg shadow-red/40"
+          >
+            Join the Movement
+          </a>
+        </div>
+      </section>
 
       <Footer />
     </main>
