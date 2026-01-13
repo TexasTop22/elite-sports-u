@@ -36,26 +36,27 @@ export default function AboutPage() {
     src="/images/about-hero.png"
     alt="Elite Sports University Athlete"
     fill
-    className="object-cover brightness-[0.9]" // lighter image
     priority
+    quality={100} // 🔥 force max quality
+    sizes="100vw"
+    className="object-cover contrast-110 saturate-110"
   />
 
-  {/* Softer gradient overlay */}
-  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60" />
+  {/* Reduced dark overlay – preserves detail */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/40" />
 
-  {/* Optional fade bottom for readability */}
-  <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/50 to-transparent" />
+  {/* Bottom fade for text only */}
+  <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/40 to-transparent" />
 
-  <div className="relative z-10 text-center px-6 max-w-3xl drop-shadow-lg">
-    <h1 className="text-4xl md:text-6xl font-extrabold text-white uppercase leading-tight">
+  <div className="relative z-10 text-center px-6 max-w-3xl">
+    <h1 className="text-4xl md:text-6xl font-extrabold text-white uppercase leading-tight drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
       What is <span className="text-red">Elite Sports University?</span>
     </h1>
-    <p className="text-lg md:text-xl text-gray-100 mt-4 font-medium max-w-2xl mx-auto">
+    <p className="text-lg md:text-xl text-gray-100 mt-4 font-medium max-w-2xl mx-auto drop-shadow-md">
       Built on Division I-level training methods and powered by passion, discipline, and purpose.
     </p>
   </div>
 </section>
-
 
       {/* ─── MISSION SECTION ─── */}
       <section className="py-20 bg-gray-50 text-center">
