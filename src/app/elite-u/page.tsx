@@ -7,37 +7,34 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+declare global {
+  interface Window {
+    EmbedSocialHashtag?: {
+      init: () => void;
+    };
+  }
+}
+
 export default function EliteUPage() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
 
-    // ✅ Dynamically load EmbedSocial script (only once)
+    const initEmbedSocial = () => {
+      if (window.EmbedSocialHashtag) {
+        window.EmbedSocialHashtag.init();
+      }
+    };
+
     if (!document.getElementById("EmbedSocialHashtagScript")) {
       const script = document.createElement("script");
       script.id = "EmbedSocialHashtagScript";
       script.src = "https://embedsocial.com/cdn/ht.js";
-      document.head.appendChild(script);
+      script.async = true;
+      script.onload = initEmbedSocial;
+      document.body.appendChild(script);
+    } else {
+      initEmbedSocial();
     }
-
-    // ✅ Resize listener to ensure EmbedSocial feed auto-expands
-    const resizeFeed = () => {
-      const embedContainer = document.querySelector(
-        ".embedsocial-hashtag"
-      ) as HTMLElement | null;
-      if (embedContainer) {
-        embedContainer.style.height = "auto"; // reset any fixed height
-        embedContainer.style.minHeight = "500px";
-      }
-    };
-
-    // Observe DOM changes from EmbedSocial iframe
-    const observer = new MutationObserver(resizeFeed);
-    const container = document.querySelector(".embedsocial-hashtag");
-    if (container) {
-      observer.observe(container, { childList: true, subtree: true });
-    }
-
-    return () => observer.disconnect();
   }, []);
 
   return (
@@ -66,50 +63,51 @@ export default function EliteUPage() {
       {/* ─── SOCIAL FEED SECTION ─── */}
       <section id="social-feed" className="py-20 bg-gray-50 text-center">
         <div className="max-w-6xl mx-auto px-6">
-          <h2
-            className="text-3xl md:text-4xl font-extrabold text-navy uppercase mb-6"
-            data-aos="fade-up"
-          >
+          <h2 className="text-3xl md:text-4xl font-extrabold text-navy uppercase mb-6">
             Social Feed
           </h2>
 
-          <p
-            className="text-gray-700 max-w-3xl mx-auto mb-12 leading-relaxed"
-            data-aos="fade-up"
-            data-aos-delay="150"
-          >
+          <p className="text-gray-700 max-w-3xl mx-auto mb-12 leading-relaxed">
             See what’s happening inside Elite Sports University. Stay connected
             with the latest posts, athlete highlights, and training insights
             from our community.
           </p>
 
-          {/* ✅ EmbedSocial Feed */}
+          {/* ✅ EmbedSocial SPA container */}
           <div
-            className="embedsocial-hashtag mx-auto max-w-5xl transition-all duration-700 ease-in-out"
+            className="embedsocial-hashtag mx-auto max-w-5xl"
             data-ref="4ac863795f01181ebaee64cca86740c4977a01b9"
-            style={{
-              minHeight: "600px",
-              width: "100%",
-              overflow: "visible", // allow feed to expand naturally
-            }}
-          ></div>
+            style={{ minHeight: "600px", width: "100%" }}
+          >
+            <a
+              className="feed-powered-by-es feed-powered-by-es-slider-img es-widget-branding"
+              href="https://embedsocial.com/social-media-aggregator/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Instagram widget"
+            >
+              <img
+                src="https://embedsocial.com/cdn/icon/embedsocial-logo.webp"
+                alt="EmbedSocial"
+              />
+              <div className="es-widget-branding-text">Instagram widget</div>
+            </a>
+          </div>
 
-          {/* ✅ Fallback for when JavaScript is disabled */}
+          {/* Fallback */}
           <noscript>
-            <div className="bg-white text-gray-800 border border-gray-200 rounded-xl shadow-md p-8 text-center mt-8">
-              <h3 className="text-2xl font-bold text-red mb-3">
+            <div className="bg-white border rounded-xl p-8 mt-8">
+              <h3 className="text-xl font-bold text-red mb-3">
                 Instagram Feed
               </h3>
               <p className="text-gray-600 mb-4">
-                It looks like our social feed didn’t load — but you can still
-                follow us on Instagram for the latest updates and athlete
-                highlights.
+                JavaScript is required to view the social feed.
               </p>
               <a
                 href="https://instagram.com/elite_sportsu"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-red text-white font-semibold px-6 py-3 rounded-full hover:bg-navy transition"
+                className="inline-block bg-red text-white px-6 py-3 rounded-full"
               >
                 Visit @elite_sportsu
               </a>
@@ -119,93 +117,49 @@ export default function EliteUPage() {
       </section>
 
       {/* ─── COMMUNITY SECTION ─── */}
-      <section
-        id="community"
-        className="py-24 bg-white text-center border-t border-gray-200"
-      >
-        <div className="max-w-6xl mx-auto px-6">
-          <h2
-            className="text-3xl md:text-4xl font-extrabold text-navy uppercase mb-6"
-            data-aos="fade-up"
-          >
+      <section className="py-24 bg-white border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-navy uppercase mb-6">
             Community
           </h2>
 
-          <p
-            className="text-gray-700 max-w-3xl mx-auto mb-12 leading-relaxed"
-            data-aos="fade-up"
-            data-aos-delay="150"
-          >
+          <p className="text-gray-700 max-w-3xl mx-auto mb-12">
             At Elite Sports University, we believe in the power of connection —
-            not just in the gym, but beyond it. Our community is built on
-            encouragement, growth, and giving back.
+            not just in the gym, but beyond it.
           </p>
 
-          <div
-            className="grid md:grid-cols-3 gap-8"
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 icon: <Users className="w-10 h-10 text-red mb-4" />,
                 title: "Teamwork",
-                desc: "We train together, push together, and celebrate success together — every rep, every win.",
+                desc: "We train together, push together, and celebrate success together.",
               },
               {
                 icon: <HeartHandshake className="w-10 h-10 text-red mb-4" />,
                 title: "Giving Back",
-                desc: "From youth mentorship to community outreach, we uplift our neighborhoods and the next generation.",
+                desc: "From youth mentorship to outreach, we uplift the next generation.",
               },
               {
                 icon: <Share2 className="w-10 h-10 text-red mb-4" />,
                 title: "Stay Connected",
-                desc: "Join our online groups and events to stay inspired and plugged into the Elite family.",
+                desc: "Join our online groups and events to stay inspired.",
               },
             ].map((item, i) => (
               <div
                 key={i}
-                className="bg-gray-50 rounded-xl shadow-md p-8 hover:shadow-xl hover:scale-[1.03] transition-transform duration-300"
+                className="bg-gray-50 rounded-xl shadow-md p-8 hover:shadow-xl transition"
               >
-                <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center">
                   {item.icon}
-                  <h3 className="text-xl font-bold text-navy mb-3 uppercase tracking-wide">
+                  <h3 className="text-xl font-bold text-navy mb-3 uppercase">
                     {item.title}
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">{item.desc}</p>
+                  <p className="text-gray-700">{item.desc}</p>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ─── CTA SECTION ─── */}
-      <section className="relative py-20 text-center text-white overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/cta-bg.jpg"
-            alt="Athletes training background"
-            fill
-            className="object-cover brightness-[0.6]"
-          />
-          <div className="absolute inset-0 bg-red/70 mix-blend-multiply" />
-        </div>
-
-        <div className="relative z-10 max-w-3xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4 uppercase">
-            Be Part of Something Bigger
-          </h2>
-          <p className="text-lg text-gray-100 mb-6">
-            Connect. Train. Lead. Together, we build stronger athletes and
-            stronger communities.
-          </p>
-          <a
-            href="/contact"
-            className="inline-block mt-4 bg-white text-red font-bold px-10 py-4 rounded-full hover:bg-gray-100 transition shadow-lg shadow-red/40"
-          >
-            Join the Movement
-          </a>
         </div>
       </section>
 
