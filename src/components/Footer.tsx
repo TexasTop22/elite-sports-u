@@ -15,7 +15,7 @@ export default function Footer() {
             <li><Link href="/accessibility" className="hover:text-red transition">Accessibility Statement</Link></li>
             <li><Link href="/download-app" className="hover:text-red transition">Download App</Link></li>
             <li><Link href="/careers" className="hover:text-red transition">Careers</Link></li>
-            <li><Link href="/privacy-policy" className="hover:text-red transition">Privacy Policy</Link></li>
+            <li><Link href="/pages/privacy-policy" className="hover:text-red transition">Privacy Policy</Link></li>
           </ul>
         </div>
 
