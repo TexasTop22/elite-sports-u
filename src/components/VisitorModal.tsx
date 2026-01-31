@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import emailjs from "@emailjs/browser";
+import Link from "next/link";
 
 export default function VisitorModal() {
   const [showModal, setShowModal] = useState(false);
@@ -11,6 +12,9 @@ export default function VisitorModal() {
   const [fadeOut, setFadeOut] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  // SMS COMPLIANCE
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const [pageUrl, setPageUrl] = useState("");
   const [referrer, setReferrer] = useState("");
@@ -21,9 +25,7 @@ export default function VisitorModal() {
     country: "",
   });
 
-  /* ──────────────────────────────
-     Show modal (localStorage)
-  ────────────────────────────── */
+  /* Show modal */
   useEffect(() => {
     const hide = localStorage.getItem("hideVisitorModal");
     if (!hide) {
@@ -32,17 +34,13 @@ export default function VisitorModal() {
     }
   }, []);
 
-  /* ──────────────────────────────
-     Page + Referrer
-  ────────────────────────────── */
+  /* Page + Referrer */
   useEffect(() => {
     setPageUrl(window.location.href);
     setReferrer(document.referrer);
   }, []);
 
-  /* ──────────────────────────────
-     Visitor location
-  ────────────────────────────── */
+  /* Visitor location */
   useEffect(() => {
     fetch("https://ipapi.co/json")
       .then((res) => res.json())
@@ -56,26 +54,19 @@ export default function VisitorModal() {
       .catch(() => {});
   }, []);
 
-  /* ──────────────────────────────
-     UTM capture
-  ────────────────────────────── */
+  /* UTM capture */
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-
     const setValue = (id: string, value: string | null) => {
       if (!value) return;
       const el = document.getElementById(id) as HTMLInputElement | null;
       if (el) el.value = value;
     };
-
     setValue("utm_source", params.get("utm_source"));
     setValue("utm_medium", params.get("utm_medium"));
     setValue("utm_campaign", params.get("utm_campaign"));
   }, []);
 
-  /* ──────────────────────────────
-     Close modal
-  ────────────────────────────── */
   const handleClose = () => {
     if (dontShowAgain) {
       localStorage.setItem("hideVisitorModal", "true");
@@ -84,9 +75,6 @@ export default function VisitorModal() {
     setTimeout(() => setShowModal(false), 400);
   };
 
-  /* ──────────────────────────────
-     Checkbox logic
-  ────────────────────────────── */
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     setDontShowAgain(checked);
@@ -100,9 +88,7 @@ export default function VisitorModal() {
     }
   };
 
-  /* ──────────────────────────────
-     Submit via EmailJS
-  ────────────────────────────── */
+  /* Submit */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitting) return;
@@ -133,62 +119,33 @@ export default function VisitorModal() {
 
   return (
     <>
-      <div
-        className={`fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity ${
-          fadeOut ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        <div
-          className={`bg-white w-[92%] sm:w-[90%] md:max-w-xl md:rounded-2xl shadow-2xl overflow-hidden relative ${
-            fadeOut ? "animate-fadeOut" : "animate-fadeIn"
-          }`}
-          style={{ maxHeight: "90vh", display: "flex", flexDirection: "column" }}
-        >
+      <div className={`fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity ${fadeOut ? "opacity-0" : "opacity-100"}`}>
+        <div className={`bg-white w-[92%] sm:w-[90%] md:max-w-xl md:rounded-2xl shadow-2xl overflow-hidden relative ${fadeOut ? "animate-fadeOut" : "animate-fadeIn"}`} style={{ maxHeight: "90vh", display: "flex", flexDirection: "column" }}>
+          
           {/* HEADER */}
           <div className="bg-navy text-white flex items-center justify-between p-5">
             <div className="flex items-center gap-3">
-              <Image
-                src="/images/logo.png"
-                alt="Elite Sports U Logo"
-                width={45}
-                height={45}
-                className="rounded-md"
-              />
+              <Image src="/images/logo.png" alt="Elite Sports U Logo" width={45} height={45} />
               <h2 className="text-lg sm:text-xl font-extrabold uppercase tracking-wide">
                 Elite Sports University
               </h2>
             </div>
-            <button
-              onClick={handleClose}
-              className="text-white hover:text-red text-3xl font-bold leading-none"
-              aria-label="Close"
-            >
-              ×
-            </button>
+            <button onClick={handleClose} className="text-white hover:text-red text-3xl font-bold">×</button>
           </div>
 
           {/* BODY */}
           <div className="p-6 sm:p-8 bg-gradient-to-b from-white to-gray-50 overflow-y-auto">
             {submitted ? (
               <div className="text-center py-12">
-                <h3 className="text-2xl font-extrabold text-navy mb-2">
-                  Thank You!
-                </h3>
-                <p className="text-gray-700">
-                  Your message has been received. We’ll get back to you soon.
-                </p>
+                <h3 className="text-2xl font-extrabold text-navy mb-2">Thank You!</h3>
+                <p className="text-gray-700">Your message has been received.</p>
               </div>
             ) : (
               <>
-                <h3 className="text-2xl font-extrabold text-navy mb-2 text-center">
-                  Welcome, Champion
-                </h3>
-                <p className="text-gray-700 text-center mb-6">
-                  What brings you here today? Tell us how we can help.
-                </p>
+                <h3 className="text-2xl font-extrabold text-navy mb-2 text-center">Welcome, Champion</h3>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Unified schema */}
+                  {/* Hidden fields */}
                   <input type="hidden" name="form_type" value="visitor" />
                   <input type="hidden" name="page_url" value={pageUrl} />
                   <input type="hidden" name="referrer" value={referrer} />
@@ -198,69 +155,42 @@ export default function VisitorModal() {
                   <input type="hidden" name="visitor_city" value={location.city} />
                   <input type="hidden" name="visitor_region" value={location.region} />
                   <input type="hidden" name="visitor_country" value={location.country} />
-                  <input type="hidden" name="phone" value="" />
 
-                  <select
-                    name="looking_for"
-                    required
-                    className="w-full border border-gray-300 rounded-md p-2"
-                  >
-                    <option value="">What are you looking for?</option>
-                    <option value="Fitness Membership">Fitness Membership</option>
-                    <option value="Athletic Performance Training">
-                      Athletic Performance Training
-                    </option>
-                    <option value="Personal Training">Personal Training</option>
-                    <option value="Youth Speed & Agility">
-                      Youth Speed & Agility
-                    </option>
-                    <option value="Nutrition / Recovery">
-                      Nutrition / Recovery
-                    </option>
-                    <option value="Other">Other</option>
-                  </select>
+                  {/* SMS COMPLIANCE */}
+                  <input type="hidden" name="sms_consent" value={smsConsent ? "true" : "false"} />
 
-                  <textarea
-                    name="message"
-                    required
-                    rows={3}
-                    placeholder="Tell us about your goals..."
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone (optional)"
                     className="w-full border border-gray-300 rounded-md p-2"
                   />
 
-                  <div className="grid sm:grid-cols-2 gap-4">
+                  {/* SMS Consent */}
+                  <label className="flex items-start gap-2 text-xs text-gray-600">
                     <input
-                      type="text"
-                      name="name"
-                      required
-                      placeholder="Your Name"
-                      className="border border-gray-300 rounded-md p-2"
+                      type="checkbox"
+                      checked={smsConsent}
+                      onChange={(e) => setSmsConsent(e.target.checked)}
+                      className="mt-1 accent-red"
                     />
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      placeholder="Your Email"
-                      className="border border-gray-300 rounded-md p-2"
-                    />
-                  </div>
+                    <span>
+                      I agree to receive SMS messages from Elite Sports University regarding classes, programs, and account updates.
+                      Msg & data rates may apply. Reply STOP to opt out.
+                      <Link href="/privacy-policy" className="text-red underline ml-1">
+                        Privacy Policy
+                      </Link>
+                    </span>
+                  </label>
 
+                  {/* Submit */}
                   <div className="flex items-center justify-between mt-4">
                     <label className="flex items-center text-sm text-gray-700">
-                      <input
-                        type="checkbox"
-                        checked={dontShowAgain}
-                        onChange={handleCheckbox}
-                        className="mr-2 accent-red"
-                      />
+                      <input type="checkbox" checked={dontShowAgain} onChange={handleCheckbox} className="mr-2 accent-red" />
                       Don’t show again
                     </label>
 
-                    <button
-                      type="submit"
-                      disabled={submitting}
-                      className="bg-red text-white px-6 py-2 rounded-md font-bold hover:bg-navy transition disabled:opacity-60"
-                    >
+                    <button type="submit" disabled={submitting} className="bg-red text-white px-6 py-2 rounded-md font-bold hover:bg-navy transition disabled:opacity-60">
                       {submitting ? "Sending..." : "Submit"}
                     </button>
                   </div>
