@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
       <section className="max-w-4xl mx-auto px-6 py-16">
         <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
         <p className="text-sm text-gray-500 mb-10">
-          Effective Date: {new Date().getFullYear()}
+          Effective Date: October 15, 2026
         </p>
 
         {/* INTRO */}
@@ -38,6 +38,7 @@ export default function PrivacyPolicyPage() {
             <li>Program enrollment and attendance data</li>
             <li>Payment and billing-related records (processed securely)</li>
             <li>Communications sent to or received from us</li>
+            <li>Messaging preferences and SMS opt-in and opt-out records</li>
           </ul>
         </section>
 
@@ -52,34 +53,48 @@ export default function PrivacyPolicyPage() {
             <li>To respond to inquiries and provide customer support</li>
             <li>To manage accounts, billing, and attendance</li>
             <li>To improve our services and user experience</li>
+            <li>To send marketing messages where you have opted in</li>
           </ul>
         </section>
 
-        {/* SMS COMMUNICATIONS — CRITICAL SECTION */}
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">
-            SMS Communications
-          </h2>
-          <p className="mb-4">
-            Elite Sports University may collect and use mobile phone numbers
-            provided by users who opt in to receive SMS communications. These
-            messages may include class reminders, schedule updates, program
-            information, appointment follow-ups, account notifications, and
-            other service-related messages.
-          </p>
-          <p className="mb-4">
-            Message frequency varies. Message and data rates may apply.
-          </p>
-          <p className="mb-4 font-semibold">
-            Mobile information will not be shared, sold, rented, or disclosed
-            to third parties for marketing or promotional purposes.
-          </p>
-          <p className="mb-2">
-            Users may opt out of SMS communications at any time by replying
-            <strong> STOP</strong>. For assistance, reply <strong>HELP</strong>
-            or contact us using the information below.
-          </p>
-        </section>
+        {/* SMS COMMUNICATIONS */}
+<section className="mb-10">
+  <h2 className="text-2xl font-semibold mb-4">
+    SMS Communications
+  </h2>
+  <p className="mb-4">
+    Elite Sports University uses mobile phone numbers to respond to
+    inquiries and provide requested service communications, including
+    class reminders, schedule updates, appointment follow-ups, and
+    account notifications.
+  </p>
+  <p className="mb-4">
+    If you separately opt in to marketing texts, we may also send
+    promotional offers, program announcements, and event information.
+    Consent to marketing texts is not a condition of purchase.
+  </p>
+  <p className="mb-4">
+    Message frequency varies. Message and data rates may apply.
+  </p>
+  <p className="mb-4 font-semibold">
+    We will not share your mobile information or opt-in consent with
+    third parties or affiliates for their marketing or promotional
+    purposes. Text messaging originator opt-in data and consent will
+    not be sold, rented, or shared for those purposes.
+  </p>
+  <p className="mb-4">
+    We may provide messaging information to service providers solely
+    as necessary to operate and deliver our messaging program on our
+    behalf. They may not use this information for their own marketing.
+    These restrictions also apply to the service-provider sharing
+    described below.
+  </p>
+  <p className="mb-2">
+    To stop texts from a sending number, reply <strong>STOP</strong> to
+    that number. For assistance, reply <strong>HELP</strong> or contact
+    us using the information below.
+  </p>
+</section>
 
         {/* DATA SHARING */}
         <section className="mb-10">
@@ -146,7 +161,7 @@ export default function PrivacyPolicyPage() {
           <p className="mt-2">
             <strong>Elite Sports University</strong>
             <br />
-            Email: support@elitesportsu.com
+            Email: elitesportsuniversity@gmail.com
           </p>
         </section>
       </section>
