@@ -5,7 +5,6 @@ import Footer from "../../components/Footer";
 import { Users, HeartHandshake, Share2 } from "lucide-react";
 import { useEffect } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css";
 
 declare global {
   interface Window {
