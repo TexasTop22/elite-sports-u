@@ -42,7 +42,7 @@ export default function EliteUPage() {
       {/* ─── HERO SECTION ─── */}
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <Image
-          src="/images/eliteu-hero.jpg"
+          src="/images/elite-fit-hero.jpg"
           alt="Elite U community"
           fill
           className="object-cover brightness-[0.8]"
